@@ -112,5 +112,15 @@ def main():
             t.add_row(value)
         print(t)
 
+        another = input("Another try? [y/n]: ")
+        if another == 'n':
+            return 0
+        else:
+            if another == 'y':
+                continue
+            else:
+                print("You didn't type 'n' so I assume you want another try :)")
+                continue
+
 if __name__ == '__main__':
     main()
