@@ -15,6 +15,7 @@ def main():
         else:
             status = learn_phase.main()
             print("---")
+            print(status)
             return status
     else:
         print("error during pre-learn phase, check dataset folder, each class must have a different folder.")
