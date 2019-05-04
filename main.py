@@ -1,6 +1,6 @@
 import prelearn_phase
 import learn_phase
-
+import try_predictions
 
 def main():
 
@@ -16,7 +16,11 @@ def main():
             status = learn_phase.main()
             print("---")
             print(status)
-            return status
+            choice = input("Would you like to execute a manual test with your picture? [y/n]")
+            if choice == 'y':
+                try_predictions.main()
+            else:
+                return status
     else:
         print("error during pre-learn phase, check dataset folder, each class must have a different folder.")
 

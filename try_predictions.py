@@ -84,31 +84,33 @@ def main():
     except:
         print("Model failed to load, try running main script again.")
         return
+    while True:
+        img_path = input("Type path to the image (with extension): ")
+        try:
+            with open(img_path, "rb") as image_file:
+                encoded = base64.b64encode(image_file.read())
+        except:
+            print("Error in the image filepath/name, try again...")
 
-    img_path = input("Type path to the image (with extension): ")
+        decoded = base64.b64decode(encoded)
+        image = Image.open(io.BytesIO(decoded))
+        try:
+            processed_image = preprocess_image(image, target_size=(224, 224))
+        except:
+            print("Error while processing the given input image, are you sure it's an image?")
+            return
 
-    with open(img_path, "rb") as image_file:
-        encoded = base64.b64encode(image_file.read())
+        prediction = model.predict(processed_image).tolist()
 
-    decoded = base64.b64decode(encoded)
-    image = Image.open(io.BytesIO(decoded))
-    try:
-        processed_image = preprocess_image(image, target_size=(224, 224))
-    except:
-        print("Error while processing the given input image, are you sure it's an image?")
-        return
+        print(classi)
 
-    prediction = model.predict(processed_image).tolist()
-
-    print(classi)
-
-    print(prediction)
-    t = PrettyTable()
-    names = np.asarray(classi)
-    t.field_names = names
-    for value in prediction:
-        t.add_row(value)
-    print(t)
+        print(prediction)
+        t = PrettyTable()
+        names = np.asarray(classi)
+        t.field_names = names
+        for value in prediction:
+            t.add_row(value)
+        print(t)
 
 if __name__ == '__main__':
     main()
