@@ -4,9 +4,9 @@ import try_predictions
 
 
 def main():
-
+    epochs = input("Specify the number of epochs: ")
     status, num_classi = prelearn_phase.main()
-
+    
     if status == "pre-learn phase completed":
         print(status)
 
@@ -14,7 +14,8 @@ def main():
             print("no classes were found in dataset folder, aborting learning...")
 
         else:
-            status = learn_phase.main()
+            
+            status = learn_phase.main(epochs)
             print("---")
             print(status)
             choice = input("Would you like to execute a manual test with your picture? [y/n]")

@@ -24,7 +24,7 @@ import pickle
 import PIL
 
 
-def main():
+def main(num_epochs):
     print("...")
     print("learning phase inizialized, this may take a while")
     print("...")
@@ -69,7 +69,7 @@ def main():
 
     stepsEpoche = len(train_batches) / 10
     stepsValid = len(valid_batches) / 10
-    numEpoche = 10
+    #num_epochs = 10
 
     vgg19_model = keras.applications.vgg19.VGG19()
 
@@ -92,7 +92,7 @@ def main():
     model.summary()
 
     hist = model.fit_generator(train_batches, steps_per_epoch=stepsEpoche, validation_data=valid_batches,
-                               validation_steps=stepsValid, epochs=numEpoche, verbose=2)
+                               validation_steps=stepsValid, epochs=int(num_epochs), verbose=2)
     json_config = model.to_json()
     with open('model_config.json', 'w') as json_file:
         json_file.write(json_config)
