@@ -5,6 +5,11 @@ import os
 
 
 def main():
+    aug = input("Would you like to perform data augmentation on the dataset? [y/n]:")
+    if aug != 'y':
+        print("Command not recognized, skipping data-augmentation...")
+    if aug == 'y':
+        num_files_desired = input("How many images for each class would you like to generate? ")
 
     print("pre-learn phase inizialized, this may take a while")
 
@@ -72,11 +77,19 @@ def main():
 
         scelteTrain = np.random.choice(immagini, p, replace=False)
         size.append(len(scelteTrain))
-        for file in scelteTrain:
-            src = os.path.join(dataset, classe, file)
-            dst = os.path.join(model, train, classe)
-            shutil.copy2(src, dst)
-            immagini.remove(file)
+        if aug == 'y':
+            for file in scelteTrain:
+                src = os.path.join(dataset, classe, file)
+                dst = os.path.join(model, train, classe)
+                shutil.copy2(src, dst)
+                immagini.remove(file)
+                #augment data
+        else:
+            for file in scelteTrain:
+                src = os.path.join(dataset, classe, file)
+                dst = os.path.join(model, train, classe)
+                shutil.copy2(src, dst)
+                immagini.remove(file)
 
         scelteTest = np.random.choice(immagini, q, replace=False)
         size.append(len(scelteTest))
