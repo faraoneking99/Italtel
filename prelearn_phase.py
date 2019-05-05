@@ -2,6 +2,7 @@ import numpy as np
 import shutil
 import pickle
 import os
+import data_augmentation as augment
 
 
 def main():
@@ -9,7 +10,7 @@ def main():
     if aug != 'y':
         print("Command not recognized, skipping data-augmentation...")
     if aug == 'y':
-        num_files_desired = input("How many images for each class would you like to generate? ")
+        num_files_desired = int(input("How many images for each class would you like to generate? "))
 
     print("pre-learn phase inizialized, this may take a while")
 
@@ -78,12 +79,12 @@ def main():
         scelteTrain = np.random.choice(immagini, p, replace=False)
         size.append(len(scelteTrain))
         if aug == 'y':
+            dst = os.path.join(model, train, classe)
+            augment.augment(os.path.join(dataset, classe), num_files_desired, dst)
             for file in scelteTrain:
                 src = os.path.join(dataset, classe, file)
-                dst = os.path.join(model, train, classe)
-                shutil.copy2(src, dst)
+                #shutil.copy2(src, dst)
                 immagini.remove(file)
-                #augment data
         else:
             for file in scelteTrain:
                 src = os.path.join(dataset, classe, file)
